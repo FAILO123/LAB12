@@ -23,59 +23,86 @@ export async function GET(request: Request, { params }: Params) {
       );
     }
 
-    const books = author.books;
+    const books = author.books || [];
 
-    const booksWithYear = books.filter((book) => book.publishedYear !== null);
-    const booksWithPages = books.filter((book) => book.pages !== null);
+    const booksWithYear = books.filter(
+      (book: any) => book.publishedYear !== null
+    );
 
-    const firstBook = booksWithYear.sort(
-      (a, b) => (a.publishedYear || 0) - (b.publishedYear || 0)
+    const booksWithPages = books.filter(
+      (book: any) => book.pages !== null
+    );
+
+    const firstBook = [...booksWithYear].sort(
+      (a: any, b: any) =>
+        (a.publishedYear || 0) - (b.publishedYear || 0)
     )[0];
 
-    const latestBook = booksWithYear.sort(
-      (a, b) => (b.publishedYear || 0) - (a.publishedYear || 0)
+    const latestBook = [...booksWithYear].sort(
+      (a: any, b: any) =>
+        (b.publishedYear || 0) - (a.publishedYear || 0)
     )[0];
 
-    const longestBook = booksWithPages.sort(
-      (a, b) => (b.pages || 0) - (a.pages || 0)
+    const longestBook = [...booksWithPages].sort(
+      (a: any, b: any) => (b.pages || 0) - (a.pages || 0)
     )[0];
 
-    const shortestBook = booksWithPages.sort(
-      (a, b) => (a.pages || 0) - (b.pages || 0)
+    const shortestBook = [...booksWithPages].sort(
+      (a: any, b: any) => (a.pages || 0) - (b.pages || 0)
     )[0];
 
     const averagePages =
       booksWithPages.length > 0
         ? Math.round(
-            booksWithPages.reduce((sum, book) => sum + (book.pages || 0), 0) /
-              booksWithPages.length
+            booksWithPages.reduce(
+              (sum: number, book: any) => sum + (book.pages || 0),
+              0
+            ) / booksWithPages.length
           )
         : 0;
 
-    const genres = [...new Set(books.map((book) => book.genre).filter(Boolean))];
+    const genres = Array.from(
+      new Set(
+        books
+          .map((book: any) => book.genre)
+          .filter((genre: any) => Boolean(genre))
+      )
+    );
 
     return NextResponse.json({
       authorId: author.id,
       authorName: author.name,
       totalBooks: books.length,
       firstBook: firstBook
-        ? { title: firstBook.title, year: firstBook.publishedYear }
+        ? {
+            title: firstBook.title,
+            year: firstBook.publishedYear,
+          }
         : null,
       latestBook: latestBook
-        ? { title: latestBook.title, year: latestBook.publishedYear }
+        ? {
+            title: latestBook.title,
+            year: latestBook.publishedYear,
+          }
         : null,
       averagePages,
       genres,
       longestBook: longestBook
-        ? { title: longestBook.title, pages: longestBook.pages }
+        ? {
+            title: longestBook.title,
+            pages: longestBook.pages,
+          }
         : null,
       shortestBook: shortestBook
-        ? { title: shortestBook.title, pages: shortestBook.pages }
+        ? {
+            title: shortestBook.title,
+            pages: shortestBook.pages,
+          }
         : null,
     });
   } catch (error: any) {
     return NextResponse.json(
-      { error: error.message },
+      { error: error.message || "Error al obtener estadísticas del autor" },
       { status: 500 }
     );
   }
