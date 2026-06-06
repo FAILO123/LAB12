@@ -1,0 +1,113 @@
+@import "tailwindcss";
+
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0a0a0a;
+    --foreground: #ededed;
+  }
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: Arial, Helvetica, sans-serif;
+}
+.input {
+  width: 100%;
+  background: #020617;
+  border: 1px solid #334155;
+  color: white;
+  padding: 12px;
+  border-radius: 10px;
+  outline: none;
+}
+
+.input:focus {
+  border-color: #22d3ee;
+}
+
+.btn {
+  color: white;
+  padding: 8px 12px;
+  border-radius: 8px;
+  font-weight: bold;
+  text-decoration: none;
+  border: none;
+  cursor: pointer;
+}
+
+.btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.card {
+  background: #0f172a;
+  border: 1px solid #334155;
+  border-radius: 14px;
+  padding: 20px;
+}
+
+.card p {
+  color: #94a3b8;
+}
+
+.card h2 {
+  font-size: 28px;
+  font-weight: bold;
+  color: #22d3ee;
+}
+.input {
+  width: 100%;
+  background: #070b18;
+  border: 1px solid #334155;
+  color: white;
+  padding: 14px;
+  border-radius: 12px;
+  outline: none;
+}
+
+.input:focus {
+  border-color: #22d3ee;
+  box-shadow: 0 0 0 2px rgba(34, 211, 238, 0.25);
+}
+
+.btn {
+  color: white;
+  padding: 10px 14px;
+  border-radius: 10px;
+  font-weight: 800;
+  border: none;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.card {
+  background: #11182b;
+  border: 1px solid #334155;
+  border-radius: 18px;
+  padding: 24px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.25);
+}
+
+.card p {
+  color: #94a3b8;
+}
+
+.card h2 {
+  font-size: 34px;
+  font-weight: 900;
+  color: #22d3ee;
+}
